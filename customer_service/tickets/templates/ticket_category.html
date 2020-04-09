@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+    <h1>{{ category | title }}</h1>
+    <hr>
+    {% for ticket in tickets %}
+        <h2><a href="{% url 'ticket_detail' ticket.pk%}">{{ ticket.title }}</a></h2>
+        <small>
+            {{ ticket.created_on.date }} |&nbsp;
+            Categories:&nbsp;
+            {% for category in ticket.categories.all %}
+            <a href="{% url 'ticket_category' category.name %}">
+                {{ category.name }}
+            </a>&nbsp;
+            {% endfor %}
+        </small>
+        <p>{{ ticket.body | slice:":400" }}...</p>
+    {% endfor %}
+</div>
+{% endblock %}
